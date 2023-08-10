@@ -39,6 +39,20 @@ add interval=1m name=NetWatchClean on-event=\
     "/system script run netwatch-cleaner" policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
     start-date=2023-08-10 start-time=02:09:35
+add interval=1m name=CheckDownAnexiaHan on-event="/tool netwatch\r\
+    \nadd disabled=no down-script=\\\r\
+    \n    \":log error \\\"[NextDNS] Error: Anexia-han was down\\\"\" host=203\
+    .162.172.59 \\\r\
+    \n    http-codes=\"\" test-script=\"\" type=tcp-conn up-script=\"\"" \
+    policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-date=2023-08-10 start-time=02:09:30
+add interval=1m name=CheckDownGreencloudHan on-event="/tool netwatch\r\
+    \nadd disabled=no down-script=\\\r\
+    \n    \":log error \\\"[NextDNS] Error: Greencloud-han was down\\\"\" host\
+    =103.199.17.192 \\\r\
+    \n    http-codes=\"\" test-script=\"\" type=tcp-conn up-script=\"\"" \
+    policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-date=2023-08-10 start-time=02:09:30
 /system script
 add dont-require-permissions=no name=netwatch-cleaner owner=admin policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
@@ -46,3 +60,4 @@ add dont-require-permissions=no name=netwatch-cleaner owner=admin policy=\
     \n:foreach netwatchId in=\$netwatchList do={\r\
     \n    /tool netwatch remove \$netwatchId\r\
     \n}"
+
